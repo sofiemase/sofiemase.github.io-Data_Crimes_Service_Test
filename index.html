@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Data Service TryIt Page</title>
+</head>
+<body>
+    <h1>Crime Data Service TryIt Page</h1>
+    
+    <form id="crimeDataForm">
+        <label for="latitude">Latitude:</label>
+        <input type="text" id="latitude" name="latitude"><br><br>
+        
+        <label for="longitude">Longitude:</label>
+        <input type="text" id="longitude" name="longitude"><br><br>
+        
+        <label for="zipcode">Zipcode:</label>
+        <input type="text" id="zipcode" name="zipcode"><br><br>
+        
+        <button type="button" onclick="invokeCrimeData()">Invoke Crime Data Service</button>
+    </form>
+    
+    <div id="crimeDataResponse">
+        <!-- Service response will be displayed here -->
+    </div>
+    
+    <script>
+        function invokeCrimeData() {
+            // Get input values
+            const latitude = document.getElementById("latitude").value;
+            const longitude = document.getElementById("longitude").value;
+            const zipcode = document.getElementById("zipcode").value;
+            
+            // Construct the URL for the Crime Data Service
+            const url = `/crimedata?latitude=${latitude}&longitude=${longitude}&zipcode=${zipcode}`;
+            
+            // Make a GET request to the Crime Data Service
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Display the response
+                    document.getElementById("crimeDataResponse").innerHTML = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    </script>
+</body>
+</html>
